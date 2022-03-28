@@ -142,8 +142,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf ngx_healthcheck_module-master.tar.gz\
+    && cd /tmp/openresty-${RESTY_VERSION}/bundle/nginx-1.19.9 \
+    && patch -p1   /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
     && cd /tmp/openresty-${RESTY_VERSION} \
-    && patch -p3   /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
     && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
