@@ -47,7 +47,6 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-sha1-asm \
     --with-stream \
     --with-stream_ssl_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_vnswrr_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_check_module \
     --with-threads \
     "
