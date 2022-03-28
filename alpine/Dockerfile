@@ -50,7 +50,6 @@ ARG RESTY_CONFIG_OPTIONS="\
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_check_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_vnswrr_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_consistent_hash_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_keepalive_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_concat_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_user_agent_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_multi_upstream_module \
