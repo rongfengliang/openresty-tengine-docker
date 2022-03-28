@@ -47,11 +47,7 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-sha1-asm \
     --with-stream \
     --with-stream_ssl_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_check_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_concat_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_user_agent_module \
-    --add-module=/tmp/tengine-2.3.3/modules/ngx_multi_upstream_module \
-
+    --add-module=/tmp/ngx_healthcheck_module-master \
     --with-threads \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
@@ -84,6 +80,7 @@ LABEL resty_add_package_rundeps="${RESTY_ADD_PACKAGE_RUNDEPS}"
 LABEL resty_eval_pre_configure="${RESTY_EVAL_PRE_CONFIGURE}"
 LABEL resty_eval_post_make="${RESTY_EVAL_POST_MAKE}"
 
+COPY ngx_healthcheck_module-master.tar.gz /tmp/ngx_healthcheck_module-master.tar.gz
 
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
@@ -143,10 +140,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && make -j${RESTY_J} install \
     && cd /tmp \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
-    && curl -fSL https://github.com/alibaba/tengine/archive/refs/tags/2.3.3.tar.gz -o tengine-2.3.3.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
-    && tar xzf tengine-2.3.3.tar.gz \
+    && tar xzf ngx_healthcheck_module-master.tar.gz\
     && cd /tmp/openresty-${RESTY_VERSION} \
+    && patch -p3   /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
     && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
@@ -156,7 +153,7 @@ RUN apk add --no-cache --virtual .build-deps \
         openssl-${RESTY_OPENSSL_VERSION}.tar.gz openssl-${RESTY_OPENSSL_VERSION} \
         pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
-        tengine-2.3.3.tar.gz tengine-2.3.3 \
+        ngx_healthcheck_module-master.tar.gz ngx_healthcheck_module-master \
     && apk del .build-deps \
     && mkdir -p /var/run/openresty \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
