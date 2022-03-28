@@ -51,6 +51,8 @@ ARG RESTY_CONFIG_OPTIONS="\
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_concat_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_trim_filter_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_consistent_hash_module \ 
+    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_footer_filter_module \ 
+    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_limit_req_module \ 
     --with-threads \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
