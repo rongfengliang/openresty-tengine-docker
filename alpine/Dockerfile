@@ -48,6 +48,9 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-stream \
     --with-stream_ssl_module \
     --add-module=/tmp/ngx_healthcheck_module-master \
+    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_concat_module \
+    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_trim_filter_module \
+    --add-module=/tmp/tengine-2.3.3/modules/ngx_http_upstream_consistent_hash_module \ 
     --with-threads \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
@@ -140,7 +143,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && make -j${RESTY_J} install \
     && cd /tmp \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
+    && curl -fSL https://github.com/alibaba/tengine/archive/refs/tags/2.3.3.tar.gz -o tengine-2.3.3.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
+    && tar xzf tengine-2.3.3.tar.gz \
     && tar xzf ngx_healthcheck_module-master.tar.gz\
     && cd /tmp/openresty-${RESTY_VERSION}/bundle/nginx-1.19.9 \
     && patch -p1  < /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
@@ -155,6 +160,7 @@ RUN apk add --no-cache --virtual .build-deps \
         pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
         ngx_healthcheck_module-master.tar.gz ngx_healthcheck_module-master \
+        tengine-2.3.3.tar.gz tengine-2.3.3 \
     && apk del .build-deps \
     && mkdir -p /var/run/openresty \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
