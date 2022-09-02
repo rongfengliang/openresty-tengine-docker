@@ -51,7 +51,7 @@ ARG RESTY_CONFIG_OPTIONS="\
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_concat_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_trim_filter_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_footer_filter_module \ 
-    --add-module=/tmp/njs-0.7.2/nginx/ \
+    --add-module=/tmp/njs-0.7.7/nginx/ \
     --with-threads \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
@@ -145,10 +145,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && cd /tmp \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
     && curl -fSL https://github.com/alibaba/tengine/archive/refs/tags/2.3.3.tar.gz -o tengine-2.3.3.tar.gz \
-    && curl -fSL https://github.com/nginx/njs/archive/refs/tags/0.7.2.tar.gz -o 0.7.2.tar.gz \
+    && curl -fSL https://github.com/nginx/njs/archive/refs/tags/0.7.7.tar.gz -o 0.7.7.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf tengine-2.3.3.tar.gz \
-    && tar xzf 0.7.2.tar.gz \
+    && tar xzf 0.7.7.tar.gz \
     && tar xzf ngx_healthcheck_module-master.tar.gz\
     && cd /tmp/openresty-${RESTY_VERSION}/bundle/nginx-1.19.9 \
     && patch -p1  < /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
