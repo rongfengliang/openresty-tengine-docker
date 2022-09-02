@@ -150,10 +150,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && cd /tmp \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
     && curl -fSL https://github.com/alibaba/tengine/archive/refs/tags/2.3.3.tar.gz -o tengine-2.3.3.tar.gz \
-    && curl -fSL https://github.com/nginx/njs/archive/refs/tags/0.7.2.tar.gz -o 0.7.2.tar.gz \
+    && curl -fSL https://github.com/nginx/njs/archive/refs/tags/0.7.7.tar.gz -o 0.7.7.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf tengine-2.3.3.tar.gz \
-    && tar xzf 0.7.2.tar.gz \
+    && tar xzf 0.7.7.tar.gz \
     && tar xzf ngx_healthcheck_module-master.tar.gz\
     && cd /tmp/openresty-${RESTY_VERSION}/bundle/nginx-1.21.4 \
     && patch -p1  < /tmp/ngx_healthcheck_module-master/nginx_healthcheck_for_nginx_1.19+.patch \
