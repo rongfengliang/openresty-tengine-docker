@@ -54,7 +54,7 @@ ARG RESTY_CONFIG_OPTIONS="\
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_trim_filter_module \
     --add-module=/tmp/tengine-2.3.3/modules/ngx_http_footer_filter_module \ 
     --add-module=/tmp/njs-0.7.7/nginx/ \
-    --add-module=/tmp/nchan-1.3.0 \
+    --add-module=/tmp/nchan-1.3.6 \
     --with-threads \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
@@ -113,7 +113,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && if [ -n "${RESTY_EVAL_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_PRE_CONFIGURE}); fi \
     && cd /tmp \
     && curl -fSL "${RESTY_OPENSSL_URL_BASE}/openssl-${RESTY_OPENSSL_VERSION}.tar.gz" -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
-    && curl -fSL https://github.com/slact/nchan/archive/refs/tags/v1.3.0.tar.gz -o v1.3.0.tar.gz \
+    && curl -fSL https://github.com/rongfengliang/nchan/archive/refs/tags/v1.3.6.tar.gz -o v1.3.6.tar.gz \
     && tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && cd openssl-${RESTY_OPENSSL_VERSION} \
     && if [ $(echo ${RESTY_OPENSSL_VERSION} | cut -c 1-5) = "1.1.1" ] ; then \
@@ -137,7 +137,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && curl -fSL https://downloads.sourceforge.net/project/pcre/pcre/${RESTY_PCRE_VERSION}/pcre-${RESTY_PCRE_VERSION}.tar.gz -o pcre-${RESTY_PCRE_VERSION}.tar.gz \
     && echo "${RESTY_PCRE_SHA256}  pcre-${RESTY_PCRE_VERSION}.tar.gz" | shasum -a 256 --check \
     && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz \
-    && tar xzf v1.3.0.tar.gz \
+    && tar xzf v1.3.6.tar.gz \
     && cd /tmp/pcre-${RESTY_PCRE_VERSION} \
     && ./configure \
         --prefix=/usr/local/openresty/pcre \
